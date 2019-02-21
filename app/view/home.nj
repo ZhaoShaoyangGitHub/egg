@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block head %}
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <link rel="stylesheet" href="/public/css/bootstrap.css">
+    <title>首页</title>
+    <style>
+        .head {
+            color: #FFFFFF;
+            background-color: #333333;
+            display: flex;
+            height: 80px;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+        }
+        .head .portrait {
+            display: block;
+            width: 40px;
+            height: 40px;
+            background-color: #FFFFFF;
+        }
+        footer {
+            color: #FFFFFF;
+            padding: 20px;
+            background-color: #999999
+        }
+        .container {
+            padding-top: 50px;
+            padding-bottom: 50px;
+        }
+    </style>
+    {% endblock head %}
+</head>
+<body>
+    <header class="text-center head">
+        <div class="logo rounded" style="width:80px;">
+            <img src="{{configure.logo}}" width="100%">
+        </div>
+        <h1>我的个人博客</h1>
+        <div class="user">
+            <a href="/user" class="portrait rounded-circle"></a>
+        </div>
+    </header>
+    <section class="container minheight">
+        <div class="row">
+            <div class="col-3 sideBar">
+                <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                    {% for item in classification %}
+                        {% if loop.index ==1 %}
+                            <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">{{item.name}}</a>
+                        {% elif loop.index ==2 %}
+                            <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">{{item.name}}</a>
+                        {% endif %}   
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-9 main">
+                <div class="tab-content" id="v-pills-tabContent">
+                    <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                        <div class="row">
+                            {% for item in article[1] %}
+                                <div class="col-4">
+                                    <div class="card">
+                                        <img class="card-img-top" src="{{item.thumb}}" alt="{{item.article_name}}">
+                                        <div class="card-body">
+                                            <h5 class="card-title">{{item.article_name}}</h5>
+                                            <p class="card-text">{{item.article_author}}</p>
+                                            <p class="card-text">{{helper.momentTime(item.created_date)}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                        <div class="row">
+                            {% for item in article[2] %}
+                                <div class="col-4">
+                                    <div class="card">
+                                        <img class="card-img-top" src="{{item.thumb}}" alt="{{item.article_name}}">
+                                        <div class="card-body">
+                                            <h5 class="card-title">{{item.article_name}}</h5>
+                                            <p class="card-text">{{item.article_author}}</p>
+                                            <p class="card-text">{{helper.momentTime(item.created_date)}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer class="text-center">{{configure.footerText}}</footer>
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.bootcss.com/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="/public/js/bootstrap.min.js"></script>
+    <script>
+        $(function() {
+            let headerHeight = $("header").outerHeight();
+            let footerHeight = $("footer").outerHeight();
+            let windowHeight = $(window).height();
+            let height = windowHeight - headerHeight - footerHeight;
+            $(".minheight").css('min-height', height);
+            $(window).on('resize', function() {
+                headerHeight = $("header").outerHeight();
+                footerHeight = $("footer").outerHeight();
+                windowHeight = $(window).height();
+                height = windowHeight - headerHeight - footerHeight;
+                $(".minheight").css('min-height', height);
+            })
+        })
+    </script>
+</body>

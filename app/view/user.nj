@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block head %}
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <link rel="stylesheet" href="/public/css/bootstrap.css">
+    <title>个人中心</title>
+    <style>
+        .head {
+            color: #FFFFFF;
+            background-color: #333333;
+            display: flex;
+            height: 80px;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+        }
+        .head .portrait {
+            display: block;
+            width: 40px;
+            height: 40px;
+            background-color: #FFFFFF;
+        }
+        footer {
+            color: #FFFFFF;
+            padding: 20px;
+            background-color: #999999
+        }
+        .container {
+            padding-top: 50px;
+            padding-bottom: 50px;
+        }
+    </style>
+    {% endblock head %}
+</head>
+<body>
+    <header class="text-center head">
+        <div class="logo rounded" style="width:80px;">
+            <img src="{{configure.logo}}" width="100%">
+        </div>
+        <h1>我的个人博客页面</h1>
+        <div class="user">
+            <a href="/user" class="portrait rounded-circle"></a>
+        </div>
+    </header>
+    <section class="container minheight">
+        <form action="/form" method="post">
+            <div class="form-group">
+                <label for="exampleInputEmail1">Email address</label>
+                <input name="user" type="email" class="form-control" id="username" aria-describedby="emailHelp" placeholder="Enter email">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Password</label>
+                <input name="password" type="password" class="form-control" id="password" placeholder="Password">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </section>
+    <footer class="text-center">{{configure.footerText}}</footer>
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.bootcss.com/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="/public/js/bootstrap.min.js"></script>
+    <script>
+        $(function() {
+            let headerHeight = $("header").outerHeight();
+            let footerHeight = $("footer").outerHeight();
+            let windowHeight = $(window).height();
+            let height = windowHeight - headerHeight - footerHeight;
+            $(".minheight").css('min-height', height);
+            $(window).on('resize', function() {
+                headerHeight = $("header").outerHeight();
+                footerHeight = $("footer").outerHeight();
+                windowHeight = $(window).height();
+                height = windowHeight - headerHeight - footerHeight;
+                $(".minheight").css('min-height', height);
+            })
+        })
+    </script>
+</body>
